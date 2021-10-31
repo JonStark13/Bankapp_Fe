@@ -1,14 +1,14 @@
 <template>
     <div class="logIn_user">
         <div class="container_logIn_user">
-            <h2>Iniciar Sesión</h2>
+            <h2>Log In</h2>
 
             <form v-on:submit.prevent="processLogInUser">
                 <input type="text" v-model="user.username" placeholder="Username">
                 <br>
-                <input type="password" v-model="user.username" placeholder="Password">
+                <input type="password" v-model="user.password" placeholder="Password">
                 <br>
-                <button type="submit">Iniciar Sesión</button>
+                <button type="submit">Log In</button>
             </form>
         </div>
     </div>

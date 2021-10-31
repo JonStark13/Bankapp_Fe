@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="app">
     <div class="header">
-      <h1>Bank Tokio II</h1>
+      <h1>Tokio II Bank</h1>
       <nav>
-        <button v-if="is_auth">Inicio</button>
-        <button v-if="is_auth">Cuenta</button>
-        <button v-if="is_auth">Cerrar Sesión</button>
-        <button v-if="!is_auth" v-on:click="loadLogIn">Iniciar Sesión</button>
-        <button v-if="!is_auth" v-on:click="loadSignUp">Registrarse</button>
+        <button v-if="is_auth" v-on:click="loadHome">Home</button>
+        <button v-if="is_auth" v-on:click="loadAccount">Account</button>
+        <button v-if="is_auth" v-on:click="logOut">Log Out</button>
+        <button v-if="!is_auth" v-on:click="loadLogIn">Log In</button>
+        <button v-if="!is_auth" v-on:click="loadSignUp">Sign In</button>
       </nav>
     </div>
   </div>
@@ -16,6 +16,7 @@
     <router-view
       v-on:completedLogIn="completedLogIn"
       v-on:completedSignUp="completedSignUp"
+      v-on:logOut="logOut"
     >
     </router-view>
   </div>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
 
   name: 'App',
@@ -39,8 +41,12 @@ export default {
   },
   methods:{
     verifyAuth: function(){
+      this.is_auth = localStorage.getItem("isAuth")||false;
+
       if(this.is_auth==false)
-        this.$router.push({name: "logIn"})
+        this.$router.push({name: "logIn"});
+      else
+        this.$$router.push({name: "home"});
     },
 
     loadLogIn: function(){
@@ -51,9 +57,33 @@ export default {
       this.$router.push({name: "signUp"})
     },
 
-    completedLogIn: function(data) {},
+    completedLogIn: function(data) {
+      localStorage.setItem("isAuth", true);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("token_access", data.token_access);
+      localStorage.setItem("token_refresh", data.token_refresh);
+      alert("Success");
+      this.verifyAuth();
+    },
 
-    completedSignUp: function(data) {},
+    completedSignUp: function(data) {
+      alert("SignUp completed");
+      this.completedLogIn(data);
+    },
+
+    loadHome: function(){
+      this.$router.push({name: "home"})
+    },
+
+    logOut: function(){
+      localStorage.clear();
+      alert("LogOut Success");
+      this.verifyAuth();
+    },
+
+    loadAccount: function(){
+      this.$router.push({name: "account"});
+    },
 
   },
   created: function(){
@@ -105,6 +135,7 @@ export default {
 
     border-radius: 5px;
     padding: 10px 20px;
+    font-size: 12px;
   }
 
   .header nav button:hover{

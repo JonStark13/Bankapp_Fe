@@ -1,7 +1,7 @@
 <template>
     <div class="signUp_user">
         <div class="container_signUp_user">
-            <h2>Registrarse</h2>
+            <h2>Sign Up</h2>
 
             <form v-on:submit.prevent="processSignUp">
                 <input type="text" v-model="user.username" placeholder="Username">
@@ -13,13 +13,13 @@
                 <input type="text" v-model="user.name" placeholder="Name">
                 <br>
 
-                <input type="email" v-model="user.username" placeholder="Email">
+                <input type="email" v-model="user.email" placeholder="Email">
                 <br>
 
                 <input type="number" v-model="user.account.balance" placeholder="Initial Balance">
                 <br>
 
-                <button type="submit">Registrarse</button>  
+                <button type="submit">Sign Up</button>  
             </form>
 
         </div>
@@ -51,7 +51,7 @@ export default {
     methods:{
         processSignUp: function(){
             axios.post(
-                "https://p65.herokuapp.com/user/",
+                "https://minticp65.herokuapp.com/user/",
                 this.user,
                 {headers:{}}
                 )
@@ -89,7 +89,7 @@ export default {
         border: 3px solid rgba(6, 53, 37, 0.7);
         border-radius: 10px;
         width: 25%;
-        height: 60%;
+        height: 85%;
 
         display: flex;
         flex-direction: column;
